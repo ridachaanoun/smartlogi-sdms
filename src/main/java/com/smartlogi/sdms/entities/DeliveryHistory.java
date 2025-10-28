@@ -18,7 +18,7 @@ public class DeliveryHistory {
     @UuidGenerator
     private String id;
     @ManyToOne
-    @JoinColumn(name = "parcel_id")
+    @JoinColumn(name = "colis_id")
     private  Colis colis;
 
     private String status;

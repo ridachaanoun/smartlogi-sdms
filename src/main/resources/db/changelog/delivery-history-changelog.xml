@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="8" author="rida">
+        <createTable tableName="delivery_history">
+            <column name="id" type="VARCHAR(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="colis_id" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(100)"/>
+            <column name="change_date" type="TIMESTAMP"/>
+            <column name="comment" type="VARCHAR(1000)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="delivery_history"
+                                 baseColumnNames="colis_id"
+                                 referencedTableName="colis"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_history_colis"/>
+    </changeSet>
+
+</databaseChangeLog>

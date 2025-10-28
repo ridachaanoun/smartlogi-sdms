@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="6" author="rida">
+        <createTable tableName="colis">
+            <column name="id" type="VARCHAR(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)"/>
+            <column name="weight" type="DOUBLE"/>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="priority" type="VARCHAR(50)"/>
+            <column name="destination_city" type="VARCHAR(255)"/>
+            <column name="driver_id" type="VARCHAR(255)"/>
+            <column name="sender_id" type="VARCHAR(255)"/>
+            <column name="recipient_id" type="VARCHAR(255)"/>
+            <column name="zone_id" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="colis"
+                                 baseColumnNames="driver_id"
+                                 referencedTableName="delivery"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_colis_delivery"/>
+
+        <addForeignKeyConstraint baseTableName="colis"
+                                 baseColumnNames="sender_id"
+                                 referencedTableName="sender_client"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_colis_sender"/>
+
+        <addForeignKeyConstraint baseTableName="colis"
+                                 baseColumnNames="recipient_id"
+                                 referencedTableName="recipient"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_colis_recipient"/>
+
+        <addForeignKeyConstraint baseTableName="colis"
+                                 baseColumnNames="zone_id"
+                                 referencedTableName="zone"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_colis_zone"/>
+    </changeSet>
+
+</databaseChangeLog>

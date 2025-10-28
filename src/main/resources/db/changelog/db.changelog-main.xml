@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- include per-entity changelogs -->
+    <include file="db/changelog/delivery-changlog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/product-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/zone-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/sender-client-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/recipient-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/colis-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/colis-product-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/delivery-history-changelog.xml" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>
