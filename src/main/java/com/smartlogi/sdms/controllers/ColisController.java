@@ -27,5 +27,11 @@ public class ColisController {
     public ResponseEntity<List<ColisResponseDTO>> getAllColis() {
         return ResponseEntity.ok(colisService.getAllColis());
     }
-    
+
+    @PutMapping("/{colisId}/assign/{driverId}")
+    public ResponseEntity<ColisResponseDTO> assignColisToDriver(
+            @PathVariable String colisId,
+            @PathVariable String driverId) {
+        return ResponseEntity.ok(colisService.assignColisToDriver(colisId, driverId));
+    }
 }
