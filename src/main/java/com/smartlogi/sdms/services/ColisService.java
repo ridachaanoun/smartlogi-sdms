@@ -73,4 +73,21 @@ public class ColisService {
 
         return modelMapper.map(colis, ColisResponseDTO.class);
     }
+
+    public List<ColisResponseDTO> getParcelsBySenderAndStatus(String senderId, ColieStatus status) {
+        List<Colis> colisList;
+        SenderClient senderClient = senderClientRepository.findById(senderId)
+                .orElseThrow(()->new ResourceNotFoundException("Sender not found: "+senderId));
+
+        if (status == null) {
+            colisList = colisRepository.findBySenderClient_Id(senderClient.getId());
+        } else {
+            colisList = colisRepository.findBySenderClient_IdAndStatus(senderClient.getId(), status);
+        }
+
+        return colisList.stream()
+                .map(colis -> modelMapper.map(colis, ColisResponseDTO.class))
+                .toList();
+    }
+
 }

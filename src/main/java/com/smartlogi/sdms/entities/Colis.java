@@ -19,6 +19,7 @@ public class Colis {
 
     private String description;
     private double weight;
+    @Enumerated(EnumType.STRING)
     private ColieStatus status;
     private String priority;
     private String destinationCity;

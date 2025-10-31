@@ -2,6 +2,7 @@ package com.smartlogi.sdms.controllers;
 
 import com.smartlogi.sdms.dto.ColisRequestDTO;
 import com.smartlogi.sdms.dto.ColisResponseDTO;
+import com.smartlogi.sdms.entities.ColieStatus;
 import com.smartlogi.sdms.services.ColisService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,4 +35,14 @@ public class ColisController {
             @PathVariable String driverId) {
         return ResponseEntity.ok(colisService.assignColisToDriver(colisId, driverId));
     }
+
+    @GetMapping("/my-colis")
+    public ResponseEntity<List<ColisResponseDTO>> getMyParcels(
+            @RequestParam(required = false) ColieStatus status ,
+            @RequestParam String senderId) {
+
+        List<ColisResponseDTO> parcels = colisService.getParcelsBySenderAndStatus(senderId, status);
+        return ResponseEntity.ok(parcels);
+    }
+
 }
