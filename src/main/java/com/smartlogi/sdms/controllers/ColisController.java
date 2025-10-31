@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/colis")
 @RequiredArgsConstructor
@@ -20,4 +22,10 @@ public class ColisController {
         ColisResponseDTO response = colisService.createColis(requestDTO);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<List<ColisResponseDTO>> getAllColis() {
+        return ResponseEntity.ok(colisService.getAllColis());
+    }
+    
 }

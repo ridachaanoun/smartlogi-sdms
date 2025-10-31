@@ -48,6 +48,8 @@ public class GlobalExceptionHandler {
             String targetType = cause.getTargetType().getSimpleName();
 
             errorResponse.put("message", "Field '" + fieldName + "' has invalid value '" + invalidValue + "'. Expected type: " + targetType);
+        } else if (ex.getMessage().contains("Required request body is missing")) {
+            errorResponse.put("message", "Request body is missing or empty. Please provide valid JSON data.");
         } else {
             errorResponse.put("message", ex.getMessage());
         }
@@ -65,4 +67,6 @@ public class GlobalExceptionHandler {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    
 }

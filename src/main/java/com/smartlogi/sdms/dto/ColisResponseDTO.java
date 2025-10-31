@@ -1,11 +1,16 @@
 package com.smartlogi.sdms.dto;
 
-import com.smartlogi.sdms.entities.ColieStatus;
+import com.smartlogi.sdms.entities.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+
 public class ColisResponseDTO {
 
     private String id;
@@ -15,8 +20,8 @@ public class ColisResponseDTO {
     private String priority;
     private String destinationCity;
 
-    private String senderName;
-    private String recipientName;
-    private String zoneName;
-    private String deliveryDriverName;
+    private SenderClient senderClient;
+    private Recipient recipient;
+    private Zone zone;
+    private Delivery delivery;
 }

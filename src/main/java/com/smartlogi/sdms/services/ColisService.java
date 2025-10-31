@@ -5,12 +5,12 @@ import com.smartlogi.sdms.dto.ColisResponseDTO;
 import com.smartlogi.sdms.entities.*;
 //import com.smartlogi.sdms.exceptions.ResourceNotFoundException;
 import com.smartlogi.sdms.exceptions.ResourceNotFoundException;
-import com.smartlogi.sdms.repositories.ColisRepository;
-import com.smartlogi.sdms.repositories.RecipientRepository;
-import com.smartlogi.sdms.repositories.SenderClientRepository;
-import com.smartlogi.sdms.repositories.ZoneRepository;
+import com.smartlogi.sdms.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +20,8 @@ public class ColisService {
     private final SenderClientRepository senderClientRepository;
     private final RecipientRepository recipientRepository;
     private final ZoneRepository zoneRepository;
+    private final DeliveryRepository deliveryRepository;
+    private final ModelMapper modelMapper;
 
     public ColisResponseDTO createColis(ColisRequestDTO dto) {
 
@@ -44,16 +46,31 @@ public class ColisService {
 
         Colis saved = colisRepository.save(colis);
 
-        return ColisResponseDTO.builder()
-                .id(saved.getId())
-                .description(saved.getDescription())
-                .weight(saved.getWeight())
-                .status(saved.getStatus())
-                .priority(saved.getPriority())
-                .destinationCity(saved.getDestinationCity())
-                .senderName(saved.getSenderClient().getFirstName() + " " + saved.getSenderClient().getLastName())
-                .recipientName(saved.getRecipient().getFirstName() + " " + saved.getRecipient().getLastName())
-                .zoneName(saved.getZone().getName())
-                .build();
+        return modelMapper.map(saved, ColisResponseDTO.class);
+
+    }
+
+
+    public List<ColisResponseDTO> getAllColis() {
+        return colisRepository.findAll()
+                .stream()
+                .map(colis -> modelMapper.map(colis, ColisResponseDTO.class))
+                .toList();
+    }
+
+
+    public ColisResponseDTO assignColisToDriver(String colisId, String driverId) {
+        Colis colis = colisRepository.findById(colisId)
+                .orElseThrow(() -> new ResourceNotFoundException("Colis not found with ID: " + colisId));
+
+        Delivery driver = deliveryRepository.findById(driverId)
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found with ID: " + driverId));
+
+        colis.setDelivery(driver);
+        colis.setStatus(ColieStatus.IN_TRANSIT); // optional
+
+        colisRepository.save(colis);
+
+        return modelMapper.map(colis, ColisResponseDTO.class);
     }
 }
